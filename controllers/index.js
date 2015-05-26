@@ -11,91 +11,15 @@
     function IndexController($scope) {
 
         $scope.tiles = [
-            {
-                settings: {
-                    id: '10',
-                    type: 'page',
-                    order: 1,
-                    size: 1,
-                    isEditable: false,
-                    element: null
-                },
-                data: {
-                    title: 'Title 1',
-                    content: 'Content 1'
-                }
-            },
-            {
-                settings: {
-                    id: '11',
-                    type: 'page',
-                    order: 0,
-                    size: 2,
-                    isEditable: false,
-                    element: null
-                },
-                data: {
-                    title: 'Title 0',
-                    content: 'Content 0'
-                }
-            },
-            {
-                settings: {
-                    id: '12',
-                    type: 'page',
-                    order: 3,
-                    size: 1,
-                    isEditable: false,
-                    element: null
-                },
-                data: {
-                    title: 'Title 3',
-                    content: 'Content 3'
-                }
-            },
-            {
-                settings: {
-                    id: '13',
-                    type: 'page',
-                    order: 2,
-                    size: 1,
-                    isEditable: false,
-                    element: null
-                },
-                data: {
-                    title: 'Title 2',
-                    content: 'Content 2'
-                }
-            },
-            {
-                settings: {
-                    id: '14',
-                    type: 'page',
-                    order: 4,
-                    size: 1,
-                    isEditable: false,
-                    element: null
-                },
-                data: {
-                    title: 'Title 4',
-                    content: 'Content 4'
-                }
-            },
-            {
-                settings: {
-                    id: '15',
-                    type: 'page',
-                    order: 5,
-                    size: 1,
-                    isEditable: false,
-                    element: null
-                },
-                data: {
-                    title: 'Title 5',
-                    content: 'Content 5'
-                }
-            }
+            new Tile('10', 'page', 0, 1, {title: 'Content 0', content: 'Lorem ipsum 0'}),
+            new Tile('11', 'page', 1, 2, {title: 'Content 1', content: 'Lorem ipsum 1'}),
+            new Tile('12', 'page', 2, 2, {title: 'Content 2', content: 'Lorem ipsum 2'}),
         ];
+
+        $scope.onMove = function() {
+            console.debug('Call API : tile/move');
+            return true;
+        };
 
         $scope.toggleIsEditable = function() {
 

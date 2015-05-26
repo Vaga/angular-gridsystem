@@ -43,8 +43,41 @@ body {
     background: #FFE7BF;
 }
 
+.sn-tile-tools {
+    position:absolute;
+    z-index: 30;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(45, 45, 45, 0.5);
+    text-align: center;
+    color: #fff;
+    padding: 10px;
+}
+.sn-tile-tools a {
+    color: #ddd;
+}
+
+.sn-tile-back {
+    z-index: 20;
+    background: #353535;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    cursor: pointer;
+}
+
 .sn-tile-front {
     padding: 10px;
+}
+
+.sn-tile-close {
+    z-index: 10;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 /********************/

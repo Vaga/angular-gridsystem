@@ -19,7 +19,7 @@
             },
             scope: {
                 settings: "=snSettings",
-                data: "=snData"
+                data: "=snData",
             }
         };
 
@@ -35,7 +35,12 @@
             scope.settings.element = element[0];
             scope.delete = function() {
 
-                gridCtrl.delete(scope.settings.id);
+                if(scope.settings.onDelete())
+                    gridCtrl.delete(scope.settings.id);
+            }
+            scope.edit = function() {
+
+                scope.settings.onEdit(scope);
             }
             gridCtrl.change();
 
@@ -66,8 +71,11 @@
 
                 e.stopPropagation();
                 e.preventDefault();
-                gridCtrl.change();
-                gridCtrl.move(scope.settings.id, e.dataTransfer.getData('Id'));
+
+                if(scope.settings.onMove())
+                    gridCtrl.move(scope.settings.id, e.dataTransfer.getData('Id'));
+
+                this.style.opacity = 1;
 
                 return false;
             }, false);

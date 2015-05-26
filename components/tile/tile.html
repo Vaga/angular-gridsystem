@@ -1,7 +1,15 @@
 <div class="sn-tile-tools" data-ng-show="settings.isEditable">
-    <button class="sn-tile-button" ng-click="delete()">Remove</button>
+    <button class="sn-tools-button" data-ng-click="showDelete = !showDelete">Remove</button>
+    <button class="sn-tools-button" data-ng-click="edit()">Edit</button>
+    <div class="sn-tools-delete" data-ng-show="showDelete">
+        Delete me ? :(
+        <a href="#" data-ng-click="delete()">Yes</a>
+        <a href="#" data-ng-click="showDelete = !showDelete">No</a>
+    </div>
 </div>
-<div class="sn-tile-back">
+<div class="sn-tile-back" data-ng-click="showTile = !showTile" data-ng-show="!showTile">
+    Title
 </div>
 <div class="sn-tile-front">
+    <a class="sn-tile-close" href="#" data-ng-click="showTile = !showTile">X</a>
 </div>

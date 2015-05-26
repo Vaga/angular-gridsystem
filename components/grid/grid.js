@@ -17,7 +17,8 @@
             templateUrl: 'components/grid/grid.html',
             controller: GridController,
             scope: {
-                tiles: "=snTiles"
+                tiles: "=snTiles",
+                onMove: "=snOnMove"
             },
             link: {
                 pre: preLink,
@@ -120,11 +121,18 @@
                 }
             }
 
-            var tmp = objA.settings.order;
-            objA.settings.order = objB.settings.order;
-            objB.settings.order = tmp;
+            if(objA.settings.onMove() && objB.settings.onMove()) {
 
-            this.change();
+                if($scope.onMove(objA.settings.id, objB.settings.id)) {
+
+                    var tmp = objA.settings.order;
+                    objA.settings.order = objB.settings.order;
+                    objB.settings.order = tmp;
+
+                    this.change();
+                }
+            }
+
         };
 
         this.sort = function() {
