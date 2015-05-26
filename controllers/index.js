@@ -27,5 +27,11 @@
                 $scope.tiles[i].settings.isEditable = !$scope.tiles[i].settings.isEditable;
             }
         };
+        $scope.addTile = function() {
+
+            var pos = $scope.tiles.length;
+            var tile = new Tile('ID-' + pos, 'page', pos, Math.floor(Math.random() * 2) + 1, {title: 'Content ' + pos, content: 'Lorem ipsum ' + pos});
+            $scope.tiles.push(tile);
+        };
     }
 })();

@@ -28,8 +28,7 @@
             // Create tile content
             var tpl = angular.element('<div class="sn-content-' + scope.settings.type + '"></div>');
             $compile(tpl)(scope);
-            var container = angular.element(element.children()[2]);
-            container.append(tpl);
+            element.append(tpl);
         
             // Add element in scope
             scope.settings.element = element[0];
