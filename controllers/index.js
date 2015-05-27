@@ -7,14 +7,12 @@
         .controller('IndexCtrl', IndexController)
 
 
-    IndexController.$inject = ['$scope'];
-    function IndexController($scope) {
+    IndexController.$inject = ['$scope', 'snGridService'];
+    function IndexController($scope, snGridService) {
 
-        $scope.tiles = [
-            new Tile('10', 'page', 0, 1, {title: 'Content 0', content: 'Lorem ipsum 0'}),
-            new Tile('11', 'page', 1, 2, {title: 'Content 1', content: 'Lorem ipsum 1'}),
-            new Tile('12', 'page', 2, 2, {title: 'Content 2', content: 'Lorem ipsum 2'}),
-        ];
+        snGridService.add(new Tile('10', 'page', 0, 1, {title: 'Content 0', content: 'Lorem ipsum 0'}));
+        snGridService.add(new Tile('11', 'page', 1, 1, {title: 'Content 0', content: 'Lorem ipsum 0'}));
+        snGridService.add(new Tile('13', 'page', 2, 1, {title: 'Content 0', content: 'Lorem ipsum 0'}));
 
         $scope.onMove = function() {
             console.debug('Call API : tile/move');
@@ -23,15 +21,17 @@
 
         $scope.toggleIsEditable = function() {
 
-            for(var i = 0; i < $scope.tiles.length; i++) {
-                $scope.tiles[i].settings.isEditable = !$scope.tiles[i].settings.isEditable;
+            var tiles = snGridService.list();
+            for(var i = 0; i < tiles.length; i++) {
+                tiles[i].settings.isEditable = !tiles[i].settings.isEditable;
             }
         };
         $scope.addTile = function() {
 
-            var pos = $scope.tiles.length;
+            var pos = snGridService.nextOrder();
+            console.debug(pos);
             var tile = new Tile('ID-' + pos, 'page', pos, Math.floor(Math.random() * 2) + 1, {title: 'Content ' + pos, content: 'Lorem ipsum ' + pos});
-            $scope.tiles.push(tile);
+            snGridService.add(tile);
         };
     }
 })();
