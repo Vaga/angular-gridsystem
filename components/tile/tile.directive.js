@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('test', [])
+        .module('test.components.grid', [])
         .directive('snTile', TileDirective);
 
     TileDirective.$inject = ['$compile', 'snGridService'];
@@ -36,53 +36,57 @@
             scope.settings.element = element[0];
             snGridService.change();
 
-            scope.edit = function() {
-                console.debug('edit');
-            };
-            scope.remove = function() {
-                console.debug('remove');
-                snGridService.remove(scope.settings.id);
-                snGridService.change();
-            };
-
             // Drag'n'drop
-            element[0].addEventListener("dragstart", function (e) {
+            element[0].addEventListener("dragstart", dragStart, false);
+            element[0].addEventListener("dragenter", dragEnter, false);
+            element[0].addEventListener("dragover", dragOver, false);
+            element[0].addEventListener("dragleave", dragLeave, false);
+            element[0].addEventListener("drop", drop, false);
+            element[0].addEventListener("dragend", dragEnd, false);
+
+            //////////
+
+            function dragStart(e) {
 
                 e.dataTransfer.effectAllowed = 'copy';
                 e.dataTransfer.setData('Id', scope.settings.id);
                 this.classList.add('sn-tile-drag');
-            }, false);
-            element[0].addEventListener("dragenter", function (e) {
+            }
+
+            function dragEnter(e) {
 
                 this.classList.add('sn-tile-drop');
                 return false;
-            }, false);
-            element[0].addEventListener("dragover", function (e) {
+            }
+            
+            function dragOver(e) {
 
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'copy';
-
                 return false;
-            }, false);
-            element[0].addEventListener("dragleave", function (e) {
+            }
+
+            function dragLeave(e) {
                 this.classList.remove('sn-tile-drop');
-            }, false);
-            element[0].addEventListener("drop", function (e) {
+            }
+
+            function drop(e) {
 
                 e.stopPropagation();
                 e.preventDefault();
 
-                if(scope.settings.onMove())
+                if(scope.settings.onMove()){
                     snGridService.move(scope.settings.id, e.dataTransfer.getData('Id'));
+                    console.debug('moved');
+                }
 
                 this.classList.remove('sn-tile-drop');
-
                 return false;
-            }, false);
-            element[0].addEventListener("dragend", function (e) {
+            }
 
+            function dragEnd(e) {
                 this.classList.remove('sn-tile-drag');
-            }, false);
+            }
         }
         
         function postLink() {}
@@ -91,5 +95,17 @@
     TileController.$inject = ['$scope', 'snGridService'];
     function TileController($scope, snGridService) {
 
+        $scope.edit = function() {
+            if($scope.settings.onEdit($scope.settings, $scope.data))
+                console.debug('edited');
+        };
+
+        $scope.remove = function() {
+            if($scope.settings.onRemove()) {
+                snGridService.remove($scope.settings.id);
+                snGridService.change();
+                console.debug('removed');
+            }
+        };
     }
 })();

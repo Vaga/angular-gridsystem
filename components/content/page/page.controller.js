@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('test')
+        .module('test.components.grid')
         .controller('ContentPageController', ContentPageController);
 
     ContentPageController.$inject = ['$scope'];

@@ -13,7 +13,7 @@
     angular.forEach(types, function(type) {
 
         angular
-            .module('test')
+            .module('test.components.grid')
             .directive(type.name, ContentDirective);
 
         function ContentDirective() {

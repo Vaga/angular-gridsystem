@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('test')
+        .module('test.components.grid')
         .directive('snGrid', GridDirective);
 
     GridDirective.$inject = ['$window', '$timeout', 'snGridService'];
@@ -27,7 +27,6 @@
         function preLink(scope, element, attrs, ctrl) {
 
             snGridService.setElement(element[0]);
-            // Bind to window resize events
         }
 
         function postLink(scope, element) {
@@ -40,11 +39,18 @@
                 }, 0);
             }, 0);
 
-            angular.element($window).bind('resize', function() {
-                snGridService.setHeight();
-                snGridService.change();
-                scope.$apply();
-            });
+            // Bind to window resize events
+            scope.$watch(
+                function() {
+                    return element[0].clientHeight;
+                },
+                function(nv, ov) {
+                    if (nv !== ov) {
+                        snGridService.setHeight();
+                        snGridService.change();
+                    }
+                }
+            );
         }
     }
 

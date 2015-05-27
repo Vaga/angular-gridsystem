@@ -7,7 +7,7 @@
      * @name test.snGridService
      */
     angular
-        .module('test')
+        .module('test.components.grid')
         .service('snGridService', GridService);
 
     /** @const */ var GUTTER = 10;
@@ -24,7 +24,12 @@
         var _tiles = [];
         var _element = null;
 
-
+        /**
+         * @ngdoc
+         * @name test.snGridService#setElement
+         * @param {object} grid element
+         * @return {void}
+         */
         this.setElement = function(e) {
             _element = e
         }
@@ -53,7 +58,6 @@
 
             if(_element !== null) {
                 _size.height = _element.clientHeight;
-                console.debug('');
             }
             _unit = this.calculateUnitSize();
         };
@@ -176,12 +180,9 @@
             if(tileA === null || tileB === null)
                 return;
 
-            if(tileA.settings.onMove() && tileB.settings.onMove()) {
-
-                var tmp = tileA.settings.order;
-                tileA.settings.order = tileB.settings.order;
-                tileB.settings.order = tmp;
-            }
+            var tmp = tileA.settings.order;
+            tileA.settings.order = tileB.settings.order;
+            tileB.settings.order = tmp;
 
             this.sort();
             this.change();
