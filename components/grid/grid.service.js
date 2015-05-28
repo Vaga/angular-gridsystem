@@ -81,10 +81,17 @@
          */
         this.remove = function(id) {
 
+            var index = null;
             for(var i = 0; i < _tiles.length; ++i) {
 
-                if (id === _tiles[i].settings.id) {
+                var tile = _tiles[i];
+
+                if (id === tile.settings.id) {
+                    index = tile.settings.order;
                     _tiles.splice(i, 1);
+                }
+                if (index !== null && index > tile.settings.order) {
+                    tile.settings.order -= 1;
                 }
             }
         };
